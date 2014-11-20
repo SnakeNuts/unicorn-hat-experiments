@@ -3,8 +3,7 @@
 ###
 # Conway's game of life for Unicorn Hat
 # (C) 2014  Alex Crouzen
-# Free to rip off mercilessly for your own use.
-# No warranty of any kind. Don't do silly things.
+# Shared under the MIT permissive license.
 ###
 
 import random
