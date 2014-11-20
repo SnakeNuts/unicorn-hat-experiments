@@ -45,6 +45,18 @@ class LifeCell:
         LifeCell.matrix = {}
 
     @staticmethod
+    def matrix_value():
+        """
+        Calculate the current state of the matrix (== the sum of all 'alive' cells)
+        :return: the 'value' of the matrix
+        """
+        count = 0
+        for iter_cell in LifeCell.matrix.itervalues():
+            if iter_cell.current_state == 'alive':
+                count += 1
+        return count
+
+    @staticmethod
     def get_neighbour_surrent_state(x, y):
         """
         Get the 'state' of a neighbour
@@ -59,7 +71,7 @@ class LifeCell:
         return 0
 
     @staticmethod
-    def display_matrix(max_x, max_y, text = False):
+    def display_matrix(max_x, max_y, text=False, r=255, g=255, b=255):
         """
         Display the matrix, either on the unicorn or on the stdout
         :param max_x:
@@ -81,7 +93,7 @@ class LifeCell:
                 for y in range(max_y):
                     coordinate_tuple = (x, y)
                     if LifeCell.matrix[coordinate_tuple].current_state == 'alive':
-                        unicorn.set_pixel(x, y, 255, 255, 255)
+                        unicorn.set_pixel(x, y, r, g, b)
                     else:
                         unicorn.set_pixel(x, y, 0, 0, 0)
             unicorn.show()
@@ -147,6 +159,10 @@ if __name__ == "__main__":
     while True:
         cells = []
         LifeCell.wipe_matrix()
+        # create a random colour
+        random_r = random.randint(0, 255)
+        random_g = random.randint(0, 255)
+        random_b = random.randint(0, 255)
         for x in range(max_x):
             for y in range(max_y):
                 cell = LifeCell(x, y, random.choice(('alive', 'dead')))     # randomly populate the matrix
@@ -154,5 +170,8 @@ if __name__ == "__main__":
 
         for count in range(50):
             LifeCell.progress_generation()
-            LifeCell.display_matrix(max_x, max_y, False)    # use the unicorn hat
+            LifeCell.display_matrix(max_x, max_y, False, random_r, random_g, random_b)    # use the unicorn hat
             time.sleep(0.1)
+            if LifeCell.matrix_value() == 0:
+                break
+
